@@ -172,7 +172,14 @@ function M.setup(options)
 
 		api.nvim_create_autocmd("CmdlineLeave", {
 			callback = function()
-				if last_cmdline_data ~= cmdline_data and not find(data_mute, cmdline_data) then
+				local line = vim.fn.getcmdline()
+                local type = vim.fn.getcmdtype()
+
+                if line == "" and not type == ":" then
+                    return
+                end
+
+                if last_cmdline_data ~= cmdline_data and not find(data_mute, cmdline_data) then
 					last_cmdline_data = cmdline_data
 					add_history(cmdline_data)
 				end
