@@ -147,6 +147,8 @@ function M.setup(options)
 
 	history_path = options.history.path or history_path
 
+    data_mute = options.mute or data_mute
+
 	if fn.isdirectory(history_path) == 0 then
 		fn.mkdir(history_path, "p")
 	end
