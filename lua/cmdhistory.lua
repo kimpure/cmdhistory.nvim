@@ -9,6 +9,7 @@ local history_size = 500
 local history_path = fn.stdpath("data") .. "/cmdhistory"
 
 local data_mute = { "q", "qa", "wq", "wqa" }
+local cmdline_type = { ":" }
 
 --- @param tab any[]
 --- @param value any
@@ -138,6 +139,7 @@ end
 --- @field history CmdHistory.Options.History
 --- @field mute CmdHistory.Options.Mute
 --- @field default_keymap? boolean
+--- @field cmdline_type? string[]
 
 --- @param options? CmdHistory.Options
 --- @return CmdHistory
@@ -148,6 +150,7 @@ function M.setup(options)
 	history_path = options.history.path or history_path
 
     data_mute = options.mute or data_mute
+    cmdline_type = options.cmdline_type or cmdline_type
 
 	if fn.isdirectory(history_path) == 0 then
 		fn.mkdir(history_path, "p")
@@ -168,7 +171,9 @@ function M.setup(options)
 
 		api.nvim_create_autocmd("CmdlineChanged", {
 			callback = function()
-                cmdline_data = fn.getcmdline()
+                if find(cmdline_type, fn.getcmdtype()) then
+                    cmdline_data = fn.getcmdline()
+                end
 			end,
 		})
 
