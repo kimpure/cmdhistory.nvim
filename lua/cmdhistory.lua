@@ -84,7 +84,7 @@ end
 --- @param content string
 --- @diagnostic disable-next-line
 local function write_cmdline(content)
-    if fn.getcmdtype() ~= "" then
+    if fn.getcmdtype() == "" then
         return
     end
 
