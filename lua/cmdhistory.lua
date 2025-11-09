@@ -84,6 +84,10 @@ end
 --- @param content string
 --- @diagnostic disable-next-line
 local function write_cmdline(content)
+    if fn.getcmdtype() ~= "" then
+        return
+    end
+
 	local key_sequence = ":" .. "<C-U>" .. (content or "")
 	local keys_to_feed = api.nvim_replace_termcodes(key_sequence, true, false, true)
 	api.nvim_feedkeys(keys_to_feed, "nt", false)
