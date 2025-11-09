@@ -182,7 +182,7 @@ function M.setup(options)
 				local line = vim.fn.getcmdline()
                 local type = vim.fn.getcmdtype()
 
-                if line == "" and not type == ":" then
+                if line == "" or not type == ":" then
                     return
                 end
 
