@@ -225,8 +225,8 @@ function M.setup(options)
 	})
 
     if options.default_keymap == nil or options.default_keymap then
-        vim.keymap.set("c", "<Up>", M.prev_cmdline)
-        vim.keymap.set("c", "<Down>", M.next_cmdline)
+        vim.keymap.set("c", "<S-Up>", M.prev_cmdline)
+        vim.keymap.set("c", "<S-Down>", M.next_cmdline)
     end
 
 	return M
