@@ -129,7 +129,15 @@ end
 
 --- Save to history
 function M.save_commands()
-	fn.writefile(history, history_path .. "/history")
+    if #history == history_size then
+        --- @type string
+        --- @diagnostic disable-next-line
+        history[#history+1] = history_standard
+        fn.writefile(history, history_path .. "/history")
+        history[#history] = nil
+    else
+        fn.writefile(history, history_path .. "/history")
+    end
 end
 
 --- @class CmdHistory.Options.History
@@ -167,9 +175,14 @@ function M.setup(options)
 	history = fn.readfile(history_path .. "/history")
 	history_size = options.history.size or 500
 	history_standard = #history
+
+    if #history > history_size then
+        history_standard = tonumber(history[#history]) or history_size
+    end
+
 	history_index = history_standard
 
-	do
+    do
 		local cmdline_data = ""
 		local last_cmdline_data = ""
 
