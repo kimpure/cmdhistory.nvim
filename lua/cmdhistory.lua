@@ -178,6 +178,7 @@ function M.setup(options)
 
     if #history > history_size then
         history_standard = tonumber(history[#history]) or history_size
+        history[#history] = nil
     end
 
 	history_index = history_standard
